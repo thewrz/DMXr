@@ -33,6 +33,10 @@
   - Tested over Wi-Fi with a RaspberryPi 5 with sub 30ms latency and no UDP packet loss!
 - UDP color transport for lower-latency updates (falls back to HTTP automatically)
 - Resilient USB connection — survives unplug/replug with automatic reconnect, state replay, and real-time UI status
+- **ArtNet and sACN (E1.31) network output** -- drive DMX fixtures over the network without a USB adapter
+- **SignalRGB component sync** -- automatically writes fixture layout back to the SignalRGB plugin component file
+- **Security middleware** -- optional API key authentication, CORS policy, rate limiting, and Content Security Policy (Helmet) headers
+- **SoundSwitch integration** -- discovers local SoundSwitch fixture databases and classifies fixtures for cross-tool compatibility
 - Guaranteed blackout on shutdown
 
 ## Web Manager
@@ -53,13 +57,15 @@ The built-in web UI at `http://localhost:8080` provides:
 
 Tested with an **ENTTEC DMX USB Pro** and **Open DMX USB** (FTDI-based) adapters. However the low cost FTDI adapters that don't address DMX timing natively are very finnicky. Devices in the class of the ENTTEC DMX USB Pro are worth their money.
 
+**Network DMX output** is also supported via **ArtNet** (UDP unicast/broadcast) and **sACN / E1.31** (multicast UDP). These drivers are connectionless and do not require a USB adapter -- set `DMX_DRIVER` to `artnet` or `sacn` and configure the target IP or multicast group in settings.
+
 Fixtures tested: RGB PAR cans, RGBW moving heads (with pan/tilt), fog machines, white strobes, and scanning lasers. The color pipeline handles RGB, RGBW, dimmer-only, strobe-only, and multi-channel fixtures. If you try it with something else and it works (or doesn't), let me know.
 
 ## Architecture
 
 - **Node.js server** (Fastify) — fixture management, DMX output, web UI at `http://localhost:8080`
 - **SignalRGB plugin** — discovers servers via mDNS, sends canvas colors over UDP (with HTTP fallback)
-- **DMX output** via `dmx-ts` — supports ENTTEC DMX USB Pro and Open DMX USB (FTDI) drivers
+- **DMX output** via `dmx-ts` — supports ENTTEC DMX USB Pro, Open DMX USB (FTDI), ArtNet (UDP unicast/broadcast), and sACN / E1.31 (multicast UDP) drivers
 
 ## Fixture Libraries
 
@@ -97,7 +103,7 @@ Add fixtures through the web UI at `http://localhost:8080`.
 |----------|---------|-------------|
 | `PORT` | `8080` | HTTP server port |
 | `HOST` | `127.0.0.1` | Bind address |
-| `DMX_DRIVER` | `null` | `null`, `enttec-usb-dmx-pro`, or `enttec-open-usb-dmx` |
+| `DMX_DRIVER` | `null` | `null`, `enttec-usb-dmx-pro`, `enttec-open-usb-dmx`, `artnet`, or `sacn` |
 | `DMX_DEVICE_PATH` | `auto` | Serial port (`COM3`, `/dev/ttyUSB0`) or `auto` for detection |
 | `FIXTURE_DB_PATH` | *(auto-detect)* | Path to a local fixture database file |
 | `FIXTURES_PATH` | `./config/fixtures.json` | Persisted fixture configuration |
