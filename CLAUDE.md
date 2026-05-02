@@ -13,18 +13,24 @@ DMXr/
     ├── src/                     # All server TypeScript
     │   ├── bootstrap/           # Startup orchestration (DMX, library, shutdown)
     │   ├── config/              # Settings, remap-preset, server-config stores
-    │   ├── dmx/                 # Universe manager, dispatcher, connection pool, monitor
+    │   ├── dmx/                 # Universe manager, dispatcher, connection pool, monitor, driver factory
     │   ├── fixtures/            # Fixture/group/user-fixture stores, color pipeline, channel mapper
     │   ├── libraries/           # Library registry (OFL + user fixtures)
-    │   ├── routes/              # Fastify route handlers (~25 route modules)
-    │   ├── ofl/                 # Open Fixture Library client + disk cache
-    │   ├── udp/                 # UDP color server (DMXRC binary protocol)
+    │   ├── logging/             # Log buffer, pipeline logger
     │   ├── mdns/                # mDNS service advertisement
     │   ├── metrics/             # Latency tracker
-    │   ├── middleware/           # API key auth
+    │   ├── middleware/           # API key auth, CORS, rate limiting, CSP (Helmet)
+    │   ├── ofl/                 # Open Fixture Library client + disk cache
+    │   ├── routes/              # Fastify route handlers (~27 route modules)
+    │   ├── signalrgb/           # Component writer (syncs fixture layout to SignalRGB)
+    │   ├── soundswitch/         # SoundSwitch client, fixture classifier, DB finder
+    │   ├── types/               # Shared TypeScript types and protocol definitions
+    │   ├── udp/                 # UDP color server (DMXRC binary protocol)
+    │   ├── ui/                  # Frontend helpers (channel labels, CSS theming, OFL conversion)
+    │   ├── ui-tests/            # Playwright E2E tests (grid, CRUD, settings, multi-select)
     │   └── utils/               # Formatting, validation helpers
     ├── public/                  # Alpine.js web UI (no build step)
-    │   ├── js/                  # app.js + 26 mixin files
+    │   ├── js/                  # app.js + 31 mixin files
     │   └── css/                 # Feature-scoped CSS files
     └── config/                  # fixtures.json, settings.json (gitignored)
 ```
@@ -39,17 +45,21 @@ Browser (http://localhost:8080)       SignalRGB Plugin (DMXr.js)
 +-----------------------------------------------------------+
 |               DMXr Node.js Server (Fastify)               |
 |                                                           |
+|  Middleware: API key auth, CORS, rate limiting, CSP       |
 |  Web UI <-> REST API <-> Fixture Store (JSON)             |
 |  OFL Client (disk-cached) -> Library Registry             |
+|  SoundSwitch DB Finder -> Fixture Classifier              |
 |  UDP Color Server -> Color Pipeline -> DMX Dispatcher     |
 |  Universe Manager -> Multi-Universe Coordinator -> dmx-ts |
+|  SignalRGB Component Writer (fixture layout sync)         |
 |  Movement Engine (pan/tilt interpolation)                 |
 |  Latency Tracker -> GET /metrics                          |
+|  Pipeline Logger -> Log Buffer -> GET /logs               |
 +-----------------------------------------------------------+
-                          |
-                    ENTTEC DMX USB Pro
-                          |
-                     DMX Universe
+                  |                  |
+    ENTTEC DMX USB Pro       ArtNet / sACN (E1.31)
+          |                  (network UDP output)
+     DMX Universe
 ```
 
 ## Development
