@@ -6,6 +6,7 @@ appear as first-class devices in the SignalRGB layout editor.
 ## Key Files
 
 ### component-writer.ts
+
 - `buildComponent(fixture)` -- creates a `SignalRgbComponent` object with
   brand "DMXr", display name including DMX address, and a 1x1 LED grid
 - `writeComponentFile(fixture, dir?)` -- writes a single component JSON

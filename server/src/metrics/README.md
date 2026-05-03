@@ -30,5 +30,5 @@ sliding 1-second window.
 - **Producers**: `udp-color-server.ts` records network and colorMap timings;
   `dmx-setup.ts` / `multi-universe-setup.ts` record dmxSend timings
 - **Consumer**: `routes/metrics.ts` exposes `GET /metrics` (JSON) and
-  `GET /metrics/text` (Prometheus-style) using `getMetrics()`
+  `GET /metrics/prometheus` (Prometheus-style) using `getMetrics()`
 - **Web UI**: `public/js/settings.js` polls `/metrics` for the dashboard
