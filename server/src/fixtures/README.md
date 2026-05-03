@@ -43,7 +43,6 @@ Each stage is a pure function `(PipelineContext) -> PipelineContext` (immutable 
 - `motor-guard.ts` -- clamps motor channels to safe range (avoids mechanical extremes)
 - `fixture-capabilities.ts` -- `analyzeFixture()` derives capabilities from channel definitions
 - `fixture-validator.ts` -- validates fixture add/update requests
-- `fixture-color-extractor.ts` -- extracts current RGB from DMX snapshot
 - `color-pipeline.ts` -- `processColorBatch()` batch-processes color entries for all fixtures
 - `builtin-templates.ts` -- hardcoded generic fixture templates (RGB PAR, dimmer, etc.)
 - `user-fixture-validator.ts` -- validates user-created fixture template definitions
