@@ -2,31 +2,12 @@ import { describe, it, expect } from "vitest";
 import { createInitialStatus } from "./connection-state.js";
 
 describe("createInitialStatus", () => {
-  it("sets state to 'connected' and lastConnectedAt to a number", () => {
-    const status = createInitialStatus("connected");
-
-    expect(status.state).toBe("connected");
-    expect(status.lastConnectedAt).toBeTypeOf("number");
-  });
-
-  it("sets state to 'disconnected' and lastConnectedAt to null", () => {
-    const status = createInitialStatus("disconnected");
-
-    expect(status.state).toBe("disconnected");
-    expect(status.lastConnectedAt).toBeNull();
-  });
-
-  it("sets state to 'reconnecting' and lastConnectedAt to null", () => {
-    const status = createInitialStatus("reconnecting");
-
-    expect(status.state).toBe("reconnecting");
-    expect(status.lastConnectedAt).toBeNull();
-  });
-
-  it("initializes all statuses with reconnectAttempts 0 and null error fields", () => {
+  it("initializes each state with correct state, lastConnectedAt, and null error fields", () => {
     for (const state of ["connected", "disconnected", "reconnecting"] as const) {
       const status = createInitialStatus(state);
 
+      expect(status.state).toBe(state);
+      expect(status.lastConnectedAt).toEqual(state === "connected" ? expect.any(Number) : null);
       expect(status.reconnectAttempts).toBe(0);
       expect(status.lastDisconnectedAt).toBeNull();
       expect(status.lastError).toBeNull();
