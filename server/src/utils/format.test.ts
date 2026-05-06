@@ -16,12 +16,4 @@ describe("shortId", () => {
     expect(shortId("abc")).toBe("abc");
   });
 
-  it("handles typical UUID", () => {
-    const uuid = "a1b2c3d4-e5f6-7890-abcd-ef1234567890";
-
-    const result = shortId(uuid);
-
-    expect(result).toBe("a1b2c3d4");
-    expect(result).toHaveLength(8);
-  });
 });

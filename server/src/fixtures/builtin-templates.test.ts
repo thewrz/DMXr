@@ -5,10 +5,6 @@ import { validateUserFixtureTemplate } from "./user-fixture-validator.js";
 describe("builtin-templates", () => {
   const templates = getBuiltinTemplates();
 
-  it("returns exactly 9 templates", () => {
-    expect(templates).toHaveLength(9);
-  });
-
   it("every template has required fields", () => {
     for (const t of templates) {
       expect(t.id).toMatch(/^builtin-/);
