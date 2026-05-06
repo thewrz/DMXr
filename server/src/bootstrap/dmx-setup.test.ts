@@ -102,7 +102,7 @@ describe("createDmxStack", () => {
     expect(pushed.details.error).toBe("USB removed");
   });
 
-  it("pushes control_mode_changed on reconnect when blackout is active", async () => {
+  it("onReconnect callback does not throw when blackout is inactive", async () => {
     const connectionLog = makeConnectionLog();
 
     // Re-mock universe manager to report blackout active

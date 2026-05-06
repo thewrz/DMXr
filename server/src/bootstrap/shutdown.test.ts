@@ -37,6 +37,7 @@ describe("installShutdownHandlers", () => {
   });
 
   it("clears movementInterval during shutdown", async () => {
+    vi.useFakeTimers();
     const callback = vi.fn();
     const interval = setInterval(callback, 25);
 
@@ -46,12 +47,11 @@ describe("installShutdownHandlers", () => {
     const shutdown = installShutdownHandlers(deps);
     await shutdown("SIGTERM");
 
-    // Wait to verify interval was cleared (callback should not fire again)
-    const callCount = callback.mock.calls.length;
-    await new Promise((r) => setTimeout(r, 100));
-    expect(callback.mock.calls.length).toBe(callCount);
+    // Advance fake time — cleared interval must not fire
+    vi.advanceTimersByTime(100);
+    expect(callback).not.toHaveBeenCalled();
 
-    clearInterval(interval); // safety cleanup
+    vi.useRealTimers();
   });
 
   it("clears movementInterval before calling blackout", async () => {

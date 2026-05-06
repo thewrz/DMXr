@@ -100,6 +100,18 @@ npm run build     # compile to dist/
 
 For deployment credentials, SSH access, and machine-specific details -- query local `.claude/` memory files (not committed to repo). These vary per developer machine.
 
+## Testing philosophy
+
+Every test must justify itself against four properties:
+1. Protects against real regressions (user-visible behavior)
+2. Resists refactoring (doesn't break on internal restructuring)
+3. Fast enough to actually run
+4. Readable and maintainable
+
+Coverage % is a diagnostic, not a target. Tests at module/API boundaries
+beat tests on internals. Mocks belong at process edges, not everywhere.
+Pin every bug-fix with a regression test referencing the commit SHA.
+
 ## Maintenance
 
 When you add, remove, or rename a file, or change a module's public interface:

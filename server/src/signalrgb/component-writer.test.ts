@@ -39,50 +39,24 @@ const testFixture2 = {
 // ── buildComponent ──────────────────────────────────────────
 
 describe("buildComponent", () => {
-  it('returns ProductName prefixed with "DMXr"', () => {
+  it("produces correct metadata and address-independent fields", () => {
     const component = buildComponent(testFixture);
+
     expect(component.ProductName).toBe("DMXr Test PAR");
-  });
-
-  it("returns DisplayName with name and DMX address", () => {
-    const component = buildComponent(testFixture);
-    expect(component.DisplayName).toBe("Test PAR (DMX 1)");
-  });
-
-  it('Brand is always "DMXr"', () => {
-    const component = buildComponent(testFixture);
     expect(component.Brand).toBe("DMXr");
-  });
-
-  it('Type is always "DMX Fixture"', () => {
-    const component = buildComponent(testFixture);
     expect(component.Type).toBe("DMX Fixture");
-  });
-
-  it("LedCount is 1", () => {
-    const component = buildComponent(testFixture);
     expect(component.LedCount).toBe(1);
-  });
-
-  it("Width and Height are 1", () => {
-    const component = buildComponent(testFixture);
     expect(component.Width).toBe(1);
     expect(component.Height).toBe(1);
-  });
-
-  it("LedMapping is [0]", () => {
-    const component = buildComponent(testFixture);
     expect(component.LedMapping).toEqual([0]);
-  });
-
-  it("LedCoordinates is [[0, 0]]", () => {
-    const component = buildComponent(testFixture);
     expect(component.LedCoordinates).toEqual([[0, 0]]);
+    expect(component.LedNames).toHaveLength(1);
   });
 
-  it("LedNames has exactly 1 entry", () => {
+  it("encodes fixture name and DMX address into display fields", () => {
     const component = buildComponent(testFixture);
-    expect(component.LedNames).toHaveLength(1);
+
+    expect(component.DisplayName).toBe("Test PAR (DMX 1)");
   });
 });
 

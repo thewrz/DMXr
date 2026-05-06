@@ -3,18 +3,7 @@ import { createTestConfig, createMockOflClient, createTestUserFixtureStore } fro
 import { createLibraryStack } from "./library-setup.js";
 
 describe("createLibraryStack", () => {
-  it("creates a registry with at least 4 providers", () => {
-    const config = createTestConfig();
-    const oflClient = createMockOflClient();
-    const userFixtureStore = createTestUserFixtureStore();
-
-    const registry = createLibraryStack(config, oflClient, userFixtureStore);
-    const providers = registry.getAll();
-
-    expect(providers.length).toBeGreaterThanOrEqual(4);
-  });
-
-  it("includes the OFL provider", () => {
+  it("registers all four required providers", () => {
     const config = createTestConfig();
     const oflClient = createMockOflClient();
     const userFixtureStore = createTestUserFixtureStore();
@@ -22,36 +11,10 @@ describe("createLibraryStack", () => {
     const registry = createLibraryStack(config, oflClient, userFixtureStore);
 
     expect(registry.getById("ofl")).toBeDefined();
-  });
-
-  it("includes the builtin template provider", () => {
-    const config = createTestConfig();
-    const oflClient = createMockOflClient();
-    const userFixtureStore = createTestUserFixtureStore();
-
-    const registry = createLibraryStack(config, oflClient, userFixtureStore);
-
     expect(registry.getById("builtin")).toBeDefined();
-  });
-
-  it("includes the local-db provider", () => {
-    const config = createTestConfig();
-    const oflClient = createMockOflClient();
-    const userFixtureStore = createTestUserFixtureStore();
-
-    const registry = createLibraryStack(config, oflClient, userFixtureStore);
-
     expect(registry.getById("local-db")).toBeDefined();
-  });
-
-  it("includes the custom (user fixture) provider", () => {
-    const config = createTestConfig();
-    const oflClient = createMockOflClient();
-    const userFixtureStore = createTestUserFixtureStore();
-
-    const registry = createLibraryStack(config, oflClient, userFixtureStore);
-
     expect(registry.getById("custom")).toBeDefined();
+    expect(registry.getAll().length).toBeGreaterThanOrEqual(4);
   });
 
   it("works without SoundSwitch DB configured (localDbPath undefined)", () => {
