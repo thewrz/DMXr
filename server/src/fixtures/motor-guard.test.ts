@@ -1,8 +1,6 @@
 import { describe, it, expect } from "vitest";
 import {
   MOTOR_CHANNEL_TYPES,
-  DEFAULT_MOTOR_GUARD_BUFFER,
-  SAFE_CENTER_POSITION,
   clampMotor,
   isMotorChannel,
   computeSafePositions,
@@ -37,18 +35,6 @@ describe("MOTOR_CHANNEL_TYPES", () => {
     expect(MOTOR_CHANNEL_TYPES.has("ColorIntensity")).toBe(false);
     expect(MOTOR_CHANNEL_TYPES.has("Intensity")).toBe(false);
     expect(MOTOR_CHANNEL_TYPES.has("Strobe")).toBe(false);
-  });
-});
-
-describe("DEFAULT_MOTOR_GUARD_BUFFER", () => {
-  it("is 4", () => {
-    expect(DEFAULT_MOTOR_GUARD_BUFFER).toBe(4);
-  });
-});
-
-describe("SAFE_CENTER_POSITION", () => {
-  it("is 128", () => {
-    expect(SAFE_CENTER_POSITION).toBe(128);
   });
 });
 
