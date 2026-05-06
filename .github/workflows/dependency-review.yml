@@ -10,7 +10,6 @@ permissions:
 jobs:
   dependency-review:
     runs-on: ubuntu-latest
-    continue-on-error: true # fails gracefully if Dependency Graph not enabled in repo settings
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
